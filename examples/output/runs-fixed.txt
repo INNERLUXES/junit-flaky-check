@@ -1,0 +1,38 @@
+junit-flaky-check: examples/runs-fixed
+runs: 4 runs, 8 XML files, 8 read, 0 not read, 9 distinct tests in 2 suites
+  run-1  commit a1f3c9e     2 files read  9 tests: 9 passed, 0 failed, 0 errors, 0 skipped, 0 flaky  failure rate 0.0%
+  run-2  commit a1f3c9e     2 files read  9 tests: 9 passed, 0 failed, 0 errors, 0 skipped, 0 flaky  failure rate 0.0%
+  run-3  commit b7d2e40     2 files read  9 tests: 9 passed, 0 failed, 0 errors, 0 skipped, 0 flaky  failure rate 0.0%
+  run-4  commit c5e8a13     2 files read  9 tests: 9 passed, 0 failed, 0 errors, 0 skipped, 0 flaky  failure rate 0.0%
+settings: slow above 10 s, regression above 2 times the median, top 5
+areas:
+  Runs               info  summary x1
+  Flaky and failing  pass  no finding
+  Time               info  slowest-tests x1, slowest-suites x1
+  Hygiene            pass  no finding
+findings: 0 error, 0 warning, 3 info
+
+Runs (1 finding)
+
+  INFO     summary
+           history: run-1 0.0%, run-2 0.0%, run-3 0.0%, run-4 0.0%
+           4 runs, 9 distinct tests in 2 suites. run-1 (commit a1f3c9e): 9 tests, 9 passed, 0 failed, 0 errors, 0 skipped, 0 flaky, failure rate 0.0%; run-2 (commit a1f3c9e): 9 tests, 9 passed, 0 failed, 0 errors, 0 skipped, 0 flaky, failure rate 0.0%; run-3 (commit b7d2e40): 9 tests, 9 passed, 0 failed, 0 errors, 0 skipped, 0 flaky, failure rate 0.0%; run-4 (commit c5e8a13): 9 tests, 9 passed, 0 failed, 0 errors, 0 skipped, 0 flaky, failure rate 0.0%. The failure rate is the same in the first and the last run (0.0%).
+           basis: "To create result files which can be read by Jenkins or other Continuous integration servers, use this invocation:" (Creating JUnitXML format files, https://docs.pytest.org/en/stable/how-to/output.html#creating-junitxml-format-files)
+           basis: "<xs:element name="testcase" minOccurs="0" maxOccurs="unbounded">" (testsuite, https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd)
+           fix: Nothing to fix; this is what the tool read. A clean report means none of the checks found anything in these runs, not that the tests are good.
+
+Time (2 findings)
+
+  INFO     slowest-tests
+           history: 1. shop.checkout.PaymentTest > refundsOrder 2.25 s, 2. shop.checkout.PaymentTest > authorisesCard 1.25 s, 3. shop.checkout.PaymentTest > sendsReceiptEmail 0.835 s, 4. shop.checkout.PaymentTest > capturesPayment 0.61 s, 5. shop.checkout.CartTest > calculatesShippingForRemoteArea 0.06 s
+           The 5 slowest tests by median time across the runs: shop.checkout.PaymentTest > refundsOrder (2.25 s, 4 runs); shop.checkout.PaymentTest > authorisesCard (1.25 s, 4 runs); shop.checkout.PaymentTest > sendsReceiptEmail (0.835 s, 4 runs); shop.checkout.PaymentTest > capturesPayment (0.61 s, 4 runs); shop.checkout.CartTest > calculatesShippingForRemoteArea (0.06 s, 4 runs).
+           basis: "<xs:attribute name="time" type="xs:float" use="required"/>" (testcase, https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd)
+           fix: Nothing to fix; the list shows where the time of the suite goes.
+
+  INFO     slowest-suites
+           history: 1. shop.checkout.PaymentTest 4.965 s, 2. shop.checkout.CartTest 0.192 s
+           The 2 slowest suites by median time across the runs: shop.checkout.PaymentTest (4.965 s); shop.checkout.CartTest (0.192 s).
+           basis: "<xs:attribute name="time" type="xs:float"/>" (testsuite, https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd)
+           fix: Nothing to fix; the list shows where the time of the suite goes.
+
+GATE: PASS (--fail-on warning)
