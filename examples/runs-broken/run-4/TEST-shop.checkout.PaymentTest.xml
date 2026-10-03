@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="shop.checkout.PaymentTest" time="19.9" tests="4" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.version" value="21"/>
+  </properties>
+  <testcase name="authorisesCard" classname="shop.checkout.PaymentTest" time="1.3">
+    <system-out>authorised order 1041</system-out>
+  </testcase>
+  <testcase name="capturesPayment" classname="shop.checkout.PaymentTest" time="0.6">
+    <system-out>captured order 1041</system-out>
+  </testcase>
+  <testcase name="refundsOrder" classname="shop.checkout.PaymentTest" time="14.6">
+    <system-out>refunded order 1041</system-out>
+  </testcase>
+  <testcase name="sendsReceiptEmail" classname="shop.checkout.PaymentTest" time="3.4">
+    <system-out>receipt queued for order 1041</system-out>
+  </testcase>
+</testsuite>

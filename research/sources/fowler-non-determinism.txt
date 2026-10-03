@@ -1,0 +1,154 @@
+Source: https://martinfowler.com/articles/nonDeterminism.html
+
+## Eradicating Non-Determinism in Tests
+
+An automated regression suite can play a vital role on a
+software project, valuable both for reducing defects in production and
+essential for evolutionary design. In talking with development teams
+I've often heard about the problem of non-deterministic tests - tests
+that sometimes pass and sometimes fail. Left uncontrolled,
+non-deterministic tests can completely destroy the value of an
+automated regression suite. In this article I outline how to deal with
+non-deterministic tests. Initially quarantine helps to reduce their
+damage to other tests, but you still have to fix them soon. Therefore I
+discuss treatments for the common causes for non-determinism: lack of
+isolation, asynchronous behavior, remote services, time, and resource
+leaks.
+
+Automated testing can look easy when presented in a text
+book. And indeed the basic ideas are really quite simple. But in the
+pressure-cooker of a delivery project, trials come up that are often
+not given much attention in texts. As I know too well, authors have a
+habit of skimming over many details in order to get a core point
+across. In my conversations with our delivery teams, one recurring
+problem that we've run into is tests which have become unreliable,
+so unreliable that people don't pay much attention to whether they
+pass or fail. A primary cause of this unreliability is that some
+tests have become non-deterministic.
+
+A test is non-deterministic when it passes sometimes and fails
+sometimes, without any noticeable change in the code, tests, or
+environment. Such tests fail, then you re-run them and they
+pass. Test failures for such tests are seemingly random.
+
+Non-determinism can plague any kind of test, but it's
+particularly prone to affect tests with a broad scope, such as
+acceptance or functional tests.
+
+## Why non-deterministic tests are a problem
+
+Non-deterministic tests have two problems, firstly they are
+useless, secondly they are a virulent infection that can
+completely ruin your entire test suite. As a result they need to
+be dealt with as soon as you can, before your entire deployment
+pipeline is compromised.
+
+I'll start with expanding on their uselessness. The primary
+benefit of having automated tests is that they provide bug
+detection mechanism by acting as regression tests1. When a regression test goes red, you know
+you've got an immediate problem, often because a bug has crept
+into the system without you realizing.
+
+1:
+Yes, I know many advocates of TDD consider that a primary
+virtue of testing is the way it drives requirements and design. I
+agree that this is a big benefit, but I consider the regression
+suite to be the single biggest benefit that automated tests give
+us. Even without TDD tests are worth the cost for that.
+
+Having such a bug detector has huge benefits. Most obviously it
+means that you can find and fix bugs just after they are
+introduced. Not just does this give you the warm fuzzies because
+you kill bugs quickly, it also makes it easier to remove them
+since you know the bug got in with the last set of changes that
+are fresh in your mind. As a result you know where to look for the
+bug, which is more than half the battle in squashing it.
+
+The second level of benefit is that as you gain confidence in
+your bug detector, you gain the courage to make big changes
+knowing that when you goof, the bug detector will go off and you
+can fix the mistake quickly. 2 Without this teams are frightened to
+make the changes code needs in order to be kept clean, which leads
+to a rotting of the code base and plummeting development speed.
+
+2:
+Sometimes, of course, a test failure is due to a change in what
+the code is supposed to do, but the test hasn't been updated to
+reflect the new behavior. This is essentially a bug in the tests,
+but is equally easy to fix if it's caught right away.
+
+The trouble with non-deterministic tests is that when they go
+red, you have no idea whether its due to a bug, or just part of
+the non-deterministic behavior. Usually with these tests a
+non-deterministic failure is relatively common, so you end up
+shrugging your shoulders when these tests go red. Once you start
+ignoring a regression test failure, then that test is useless and
+you might as well throw it away.3
+
+3:
+There is a useful role for non-deterministic tests. Tests seeded
+from a randomizer can help hunt out edge cases. Performance tests
+will always come back with different values. But these kinds of
+tests are quite different from automated regression tests, which
+are my focus here.
+
+Indeed you really ought to throw a non-deterministic test away,
+since if you don't it has an infectious quality. If you have a
+suite of 100 tests with 10 non-deterministic tests in them, than
+that suite will often fail. Initially people will look at the
+failure report and notice that the failures are in
+non-deterministic tests, but soon they'll lose the discipline to
+do that. Once that discipline is lost, then a failure in the
+healthy deterministic tests will get ignored too. At that point
+you've lost the whole game and might as well get rid of all the
+tests.
+
+## Quarantine
+
+My principal aim in this article is to outline common cases
+of non-deterministic tests and how to eliminate the
+non-determinism. But before I get there I offer one piece of
+essential advice: quarantine your non-deterministic
+tests. If you have non-deterministic tests keep them in a
+different test suite to your healthy tests. That way you'll you
+can continue to pay attention to what's going on with your
+healthy tests and get good feedback from them.
+
+Place any non-deterministic test in a quarantined
+area. (But fix quarantined tests quickly.)
+
+Then the question is what to do with the quarantined test
+suites. They are useless as regression tests, but they do
+have a future as work items for cleaning up. You should not
+abandon such tests, since any tests you have in quarantine are
+not helping you with your regression coverage.
+
+A danger here is that tests keep getting thrown into
+quarantine and forgotten, which means your bug detection system
+is eroding. As a result it's worthwhile to have a mechanism that
+ensures that tests don't stay in quarantine too long. I've come
+across various ways to do this. One is a simple numeric limit:
+e.g. only allow 8 tests in quarantine. Once you hit the limit
+you must spend time to clear all the tests out. This has the
+advantage of batching up your test-cleaning if that's how you
+like to do things. Another route is to put a time limit on how
+long a test may be in quarantine, such as no longer than a
+week.
+
+The general approach with quarantine is to take the
+quarantined tests out of the main deployment pipeline so that
+you still get your regular build process. However a good team can
+be more aggressive. Our Mingle
+team puts its quarantine suite into the deployment pipeline one
+stage after its healthy tests. That way it can get the
+feedback from the healthy tests but is also forced to ensure
+that it sorts out the quarantined tests quickly. 4
+
+4:
+This works well for the Mingle team as they are skillful enough to
+find and fix non-deterministic tests quickly and disciplined
+enough to ensure they do it quickly. If your build remains
+broken for long due to your quarantine tests failing you will lose
+the value of continuous integration. So for most teams I'd advise
+keeping the quarantined tests out of the main pipeline.
+

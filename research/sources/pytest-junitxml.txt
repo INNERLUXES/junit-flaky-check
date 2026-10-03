@@ -1,0 +1,68 @@
+Source: https://docs.pytest.org/en/stable/how-to/output.html#creating-junitxml-format-files
+
+## Creating JUnitXML format files
+
+To create result files which can be read by Jenkins or other Continuous
+integration servers, use this invocation:
+
+pytest --junit-xml=path
+
+to create an XML file at path.
+
+To set the name of the root test suite xml item, you can configure the junit_suite_name option in your config file:
+
+toml
+[pytest]
+junit_suite_name = "my_suite"
+
+ini
+[pytest]
+junit_suite_name = my_suite
+
+Added in version 4.0.
+
+JUnit XML specification seems to indicate that "time" attribute
+should report total test execution times, including setup and teardown
+(1, 2).
+It is the default pytest behavior. To report just call durations
+instead, configure the junit_duration_report option like this:
+
+toml
+[pytest]
+junit_duration_report = "call"
+
+ini
+[pytest]
+junit_duration_report = call
+
+## record_xml_attribute
+
+<testcase classname="custom_classname" file="test_function.py" line="0" name="test_function" time="0.003" assertions="REQ-1234">
+ <system-out>
+ hello world
+ </system-out>
+</testcase>
+
+Using this over record_xml_property can help when using ci tools to parse the xml report.
+However, some parsers are quite strict about the elements and attributes that are allowed.
+Many tools use an xsd schema (like the example below) to validate incoming xml.
+Make sure you are using attribute names that are allowed by your parser.
+
+Below is the Scheme used by Jenkins to validate the XML report:
+
+<xs:element name="testcase">
+ <xs:complexType>
+ <xs:sequence>
+ <xs:element ref="skipped" minOccurs="0" maxOccurs="1"/>
+ <xs:element ref="error" minOccurs="0" maxOccurs="unbounded"/>
+ <xs:element ref="failure" minOccurs="0" maxOccurs="unbounded"/>
+ <xs:element ref="system-out" minOccurs="0" maxOccurs="unbounded"/>
+ <xs:element ref="system-err" minOccurs="0" maxOccurs="unbounded"/>
+ </xs:sequence>
+ <xs:attribute name="name" type="xs:string" use="required"/>
+ <xs:attribute name="assertions" type="xs:string" use="optional"/>
+ <xs:attribute name="time" type="xs:string" use="optional"/>
+ <xs:attribute name="classname" type="xs:string" use="optional"/>
+ <xs:attribute name="status" type="xs:string" use="optional"/>
+ </xs:complexType>
+</xs:element>

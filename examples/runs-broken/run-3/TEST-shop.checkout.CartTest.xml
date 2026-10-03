@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="shop.checkout.CartTest" time="0.174" tests="6" errors="0" skipped="1" failures="1">
+  <properties>
+    <property name="java.version" value="21"/>
+  </properties>
+  <testcase name="addsItemToCart" classname="shop.checkout.CartTest" time="0.044">
+    <system-out>cart has 1 item</system-out>
+  </testcase>
+  <testcase name="addsItemToCart" classname="shop.checkout.CartTest" time="0.039">
+    <system-out>cart has 1 item</system-out>
+  </testcase>
+  <testcase name="appliesDiscountCode" classname="shop.checkout.CartTest" time="0.055">
+    <failure message="expected total 45.00 but was 50.00" type="java.lang.AssertionError">java.lang.AssertionError: expected total 45.00 but was 50.00
+	at shop.checkout.CartTest.appliesDiscountCode(CartTest.java:58)</failure>
+  </testcase>
+  <testcase name="calculatesShippingForRemoteArea" classname="shop.checkout.CartTest" time="0">
+    <skipped message="waiting for the new carrier rates"/>
+  </testcase>
+  <testcase name="keepsCartAfterLogin" classname="shop.checkout.CartTest" time="0"/>
+  <testcase name="removesItemFromCart" classname="shop.checkout.CartTest" time="0.036">
+    <system-out>cart is empty</system-out>
+  </testcase>
+</testsuite>

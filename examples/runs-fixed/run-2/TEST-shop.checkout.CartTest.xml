@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="shop.checkout.CartTest" time="0.183" tests="5" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.version" value="21"/>
+  </properties>
+  <testcase name="addsItemToCart" classname="shop.checkout.CartTest" time="0.038">
+    <system-out>cart has 1 item</system-out>
+  </testcase>
+  <testcase name="appliesDiscountCode" classname="shop.checkout.CartTest" time="0.049">
+    <system-out>total 45.00 after code SPRING10</system-out>
+  </testcase>
+  <testcase name="calculatesShippingForRemoteArea" classname="shop.checkout.CartTest" time="0.058">
+    <system-out>shipping 12.90 for zone 4</system-out>
+  </testcase>
+  <testcase name="keepsCartAfterLogin" classname="shop.checkout.CartTest" time="0.005">
+    <system-out>cart kept 2 items after login</system-out>
+  </testcase>
+  <testcase name="removesItemFromCart" classname="shop.checkout.CartTest" time="0.033">
+    <system-out>cart is empty</system-out>
+  </testcase>
+</testsuite>

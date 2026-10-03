@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="shop.checkout.PaymentTest" time="16.68" tests="4" errors="0" skipped="0" failures="0" flakes="1">
+  <properties>
+    <property name="java.version" value="21"/>
+  </properties>
+  <testcase name="authorisesCard" classname="shop.checkout.PaymentTest" time="1.4">
+    <flakyFailure message="expected AUTHORISED but was PENDING" type="java.lang.AssertionError">
+      <stackTrace>java.lang.AssertionError: expected AUTHORISED but was PENDING
+	at shop.checkout.PaymentTest.authorisesCard(PaymentTest.java:41)</stackTrace>
+      <system-out>card service answered after the wait ended</system-out>
+    </flakyFailure>
+    <system-out>authorised order 1041</system-out>
+  </testcase>
+  <testcase name="capturesPayment" classname="shop.checkout.PaymentTest" time="0.58">
+    <system-out>captured order 1041</system-out>
+  </testcase>
+  <testcase name="refundsOrder" classname="shop.checkout.PaymentTest" time="13.8">
+    <system-out>refunded order 1041</system-out>
+  </testcase>
+  <testcase name="sendsReceiptEmail" classname="shop.checkout.PaymentTest" time="0.9">
+    <system-out>receipt queued for order 1041</system-out>
+  </testcase>
+</testsuite>
