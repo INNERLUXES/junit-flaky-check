@@ -1,0 +1,50 @@
+{
+  "name": "junit-flaky-check",
+  "version": "1.0.0",
+  "description": "Read the JUnit XML test results of several CI runs (a folder per run, or files in order) and report the health of the test suite across runs: flaky tests that passed and failed on the same commit or within retries, tests that fail every time, slow tests and slowest suites, tests that got much slower than their median, tests skipped in every run, tests with no time and no output, duplicate test names, empty runs, and a summary with the failure rate of each run. Its own small strict XML reader refuses a DOCTYPE and expands no entity. Never runs a test, no dependencies.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "junit-flaky-check": "bin/junit-flaky-check.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "docs",
+    "examples",
+    "research",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "test:coverage": "node --test --experimental-test-coverage \"test/*.test.js\"",
+    "check": "node tools/check.mjs",
+    "example": "node tools/example.mjs"
+  },
+  "keywords": [
+    "junit",
+    "junit-xml",
+    "flaky-tests",
+    "test-results",
+    "software-testing",
+    "qa",
+    "ci",
+    "test-automation",
+    "static-analysis",
+    "cli"
+  ],
+  "author": "INNERLUXES <info@innerluxes.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/INNERLUXES/junit-flaky-check.git"
+  },
+  "homepage": "https://innerluxes.dev/software-testing"
+}
